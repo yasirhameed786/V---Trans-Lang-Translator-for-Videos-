@@ -1,6 +1,7 @@
-Flask==2.2.2
+Flask==2.0.3
 moviepy==1.0.3
 googletrans==4.0.0-rc1
 gTTS==2.2.3
 speechrecognition==3.8.1
 pydub==0.25.1
+Werkzeug==2.0.3
