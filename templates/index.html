@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Processing</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-image: url('{{ url_for("static", filename="background.jpg") }}');
+            background-size: cover;
+        }
+
+        h1 {
+            color: white; /* Change the color to white */
+            padding: 20px;
+        }
+
+        .form-container {
+            margin: 60px auto; /* Center the container horizontally */
+            width: 80%; /* Adjust the width as needed */
+            max-width: 500px; /* Set a maximum width if desired */
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        label, select, input {
+            margin-bottom: 10px;
+            display: block;
+            width: 100%; /* Make form elements take full width */
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .file-input-button {
+            background-color: #778899;
+            color: black;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .file-input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+
+        input[type="submit"] {
+            background-color: #778899;
+            color: black;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:disabled {
+            background-color: #A9A9A9;
+            cursor: not-allowed;
+        }
+
+        input[type="submit"]:disabled:before {
+            content: "\25A0"; /* Unicode character for a square, representing a loading spinner */
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 12px;
+            animation: spin 1s linear infinite; /* Add rotation animation */
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Video Processing</h1>
+    <div class="form-container">
+        <form action="{{ url_for('process_video') }}" method="post" enctype="multipart/form-data">
+            <label for="video_path">Video File:</label>
+            <div class="file-input-wrapper">
+                <input type="file" name="video_path" accept="video/*" class="file-input" required>
+                <div class="file-input-button">Choose File</div>
+            </div>
+            
+            <label for="target_language">Target Language:</label>
+            <select name="target_language" required>
+                {% for code, name in languages.items() %}
+                   <option value="{{ code }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="submit" value="Process Video" id="submitBtn" onclick="this.disabled=true; this.value='Processing...'; this.form.submit();">
+        </form>
+    </div>
+</body>
+</html>
