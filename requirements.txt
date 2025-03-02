@@ -5,3 +5,4 @@ gTTS==2.2.3
 speechrecognition==3.8.1
 pydub==0.25.1
 Werkzeug==2.0.3
+gunicorn
